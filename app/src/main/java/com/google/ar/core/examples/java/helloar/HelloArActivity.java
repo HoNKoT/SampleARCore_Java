@@ -32,6 +32,7 @@ import com.google.ar.core.Plane;
 import com.google.ar.core.Point;
 import com.google.ar.core.Point.OrientationMode;
 import com.google.ar.core.PointCloud;
+import com.google.ar.core.Pose;
 import com.google.ar.core.Session;
 import com.google.ar.core.Trackable;
 import com.google.ar.core.TrackingState;
@@ -273,6 +274,11 @@ public class HelloArActivity extends AppCompatActivity implements GLSurfaceView.
       // Handle one tap per frame.
       handleTap(frame, camera);
 
+      // create test anchor if possible
+      if (camera.getTrackingState() == TrackingState.TRACKING) {
+        createTestAnchors();
+      }
+
       // Draw background.
       backgroundRenderer.draw(frame);
 
@@ -382,6 +388,21 @@ public class HelloArActivity extends AppCompatActivity implements GLSurfaceView.
           break;
         }
       }
+    }
+  }
+
+  private boolean createdTesAnchors = false;
+
+  private void createTestAnchors() {
+    if (!createdTesAnchors) {
+      // test
+      for (int i = 0; i < 20; i++) {
+        Pose testPose = Pose.makeTranslation(0.0f, 0.0f, i * -0.5f);
+        final Anchor testAnchor = session.createAnchor(testPose);
+        anchors.add(new ColoredAnchor(testAnchor, DEFAULT_COLOR));
+      }
+
+      createdTesAnchors = true;
     }
   }
 }
