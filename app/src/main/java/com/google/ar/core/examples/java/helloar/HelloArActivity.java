@@ -395,9 +395,24 @@ public class HelloArActivity extends AppCompatActivity implements GLSurfaceView.
 
   private void createTestAnchors() {
     if (!createdTesAnchors) {
-      // test
+      // test (左右, 上下, 正面)
+      // 正面（負数）に整列
       for (int i = 0; i < 20; i++) {
         Pose testPose = Pose.makeTranslation(0.0f, 0.0f, i * -0.5f);
+        final Anchor testAnchor = session.createAnchor(testPose);
+        anchors.add(new ColoredAnchor(testAnchor, DEFAULT_COLOR));
+      }
+
+      // 下（負数）に整列
+      for (int i = 0; i < 20; i++) {
+        Pose testPose = Pose.makeTranslation(0.0f, i * -0.5f, 0f);
+        final Anchor testAnchor = session.createAnchor(testPose);
+        anchors.add(new ColoredAnchor(testAnchor, DEFAULT_COLOR));
+      }
+
+      // 左（負数）に整列
+      for (int i = 0; i < 20; i++) {
+        Pose testPose = Pose.makeTranslation(i * -0.5f, 0.0f, i * -0f);
         final Anchor testAnchor = session.createAnchor(testPose);
         anchors.add(new ColoredAnchor(testAnchor, DEFAULT_COLOR));
       }
